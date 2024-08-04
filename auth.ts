@@ -9,7 +9,7 @@ import {
   NextApiRequest,
   NextApiResponse
 } from 'next';
-import { Backend_URL } from '@/lib/contants';
+import { APIROUTES, Backend_URL } from '@/lib/contants';
 
 export const config = {
   pages: {
@@ -34,7 +34,7 @@ export const config = {
           return null;
         }
         const { username, password } = credentils;
-        const res = await fetch(Backend_URL + '/login', {
+        const res = await fetch(Backend_URL + APIROUTES.LOGIN, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
