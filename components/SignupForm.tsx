@@ -18,6 +18,7 @@ import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { APIROUTES, Backend_URL } from '@/lib/contants';
+import { register } from '@/lib/actions';
 
 const formSchema = z.object({
   email: z
@@ -69,35 +70,26 @@ function CredebtialsForm() {
       //   throw new Error(response.error);
       // }
       // router.push('/dashboard');
-      const signupResponse: any = await fetch(
-        Backend_URL + APIROUTES.REGISTER,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: values?.email,
-            username: values?.username,
-            password: values?.password
-          })
-        }
+      const signupResponse: any = await register(
+        values?.username,
+        values?.email,
+        values?.password
       );
-      if (!signupResponse.ok) {
-        const error: any = await signupResponse.json();
-        console.log(error);
-        throw new Error(error);
-      } else {
-        const response: any = await signIn('credentials', {
-          username: values?.username,
-          password: values?.password,
-          redirect: false
-        });
-        if (!response.ok) {
-          throw new Error(response.error);
-        }
-        router.push('/dashboard');
+      // if (!signupResponse.ok) {
+      //   const error: any = await signupResponse.json();
+      //   console.log(error);
+      //   throw new Error(error);
+      // } else {
+      const response: any = await signIn('credentials', {
+        username: values?.username,
+        password: values?.password,
+        redirect: false
+      });
+      if (!response.ok) {
+        throw new Error(response.error);
       }
+      router.push('/dashboard');
+      // }
     } catch (error: any) {
       console.log(error);
       toast({

@@ -18,7 +18,7 @@ function Logo() {
       <p
         className={`font-semibold text-xl hidden lg:block ${calSans.className}`}
       >
-        Pixelgram
+        Mediagram
       </p>
     </Link>
   );
