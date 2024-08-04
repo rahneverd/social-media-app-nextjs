@@ -19,6 +19,10 @@ import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: 'This field has to be filled.' })
+    .email('This is not a valid email.'),
   username: z.string().min(2, {
     message: 'Username must be at least 2 characters.'
   }),
@@ -27,7 +31,7 @@ const formSchema = z.object({
   })
 });
 
-export default function LoginForm() {
+export default function SignupForm() {
   return (
     <div className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
@@ -73,6 +77,19 @@ function CredebtialsForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="abc@xyz.xom" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="username"
             render={({ field }) => (
               <FormItem>
@@ -98,7 +115,7 @@ function CredebtialsForm() {
             )}
           />
           <Button type="submit" className="mt-4 w-full" variant={'secondary'}>
-            Log In
+            Register
           </Button>
         </form>
       </Form>
@@ -106,9 +123,9 @@ function CredebtialsForm() {
       <Button
         className="mt-4 w-full"
         variant={'secondary'}
-        onClick={() => router.push('/signup')}
+        onClick={() => router.push('/login')}
       >
-        Create an account
+        Already have an account?
       </Button>
     </>
   );

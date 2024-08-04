@@ -16,7 +16,6 @@ export const config = {
     signIn: '/login'
   },
   // adapter: PrismaAdapter(prisma),
-  secret: 'MySecret',
   providers: [
     CredentialsProvider({
       name: 'credentils',
@@ -44,26 +43,17 @@ export const config = {
         });
         if (res.status === 200) {
           const user = await res.json();
-          console.log('in auth: ', user);
-          // return user;
           return {
             id: user._id,
             email: user.email,
             username: user.username,
             name: user.username,
             picture: user.picture
-            //     user?._id;
-            // token.name = user?.name;
-            // token.email = user?.email;
-            // token.username = user?.username;
-            // token.picture = user?.picture;
           };
         } else {
           const error: any = await res.json();
           throw new Error(error);
         }
-        // console.log(res);
-        // return res;
       }
     })
   ],
@@ -72,16 +62,7 @@ export const config = {
   },
   callbacks: {
     async session({ session, token }) {
-      // if (token) {
-      //   session.user.id = token.id;
-      //   session.user.name = token.name;
-      //   session.user.email = token.email;
-      //   session.user.image = token.picture;
-      //   session.user.username = token.username;
-      // }
-
       if (token) {
-        // session.user.avatar = token.avatar;
         console.log(token);
         session.user.username = token.username;
         session.user.token = token.token;
@@ -92,35 +73,6 @@ export const config = {
       return session;
     },
     async jwt({ token, user }) {
-      // const prismaUser: any = null;
-      //  = await prisma.user.findFirst({
-      //   where: {
-      //     email: token.email
-      //   }
-      // });
-
-      // if (!prismaUser) {
-      //   token.id = user.id;
-      //   return token;
-      // }
-      // if (!prismaUser?.username) {
-      // await prisma.user.update({
-      //   where: {
-      //     id: prismaUser.id
-      //   },
-      //   data: {
-      //     username: prismaUser.name?.split(' ').join('').toLowerCase()
-      //   }
-      // });
-      // }
-
-      // return {
-      //   _id: user._id,
-      //   // name: prismaUser.name,
-      //   email: user.email,
-      //   username: user.username
-      //   // picture: user?.image
-      // };
       console.log('from jwt: ', token);
       console.log('from jwt: ', user);
       if (user) {
@@ -133,7 +85,8 @@ export const config = {
       console.log('from jwt: ', token);
       return token;
     }
-  }
+  },
+  secret: 'MySecret'
 } satisfies NextAuthOptions;
 
 export default NextAuth(config);
