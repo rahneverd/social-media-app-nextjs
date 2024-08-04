@@ -49,7 +49,8 @@ export const config = {
           const user = await res.json();
           return user;
         } else {
-          throw new Error('Invalid credentials');
+          const error: any = await res.json();
+          throw new Error(error);
         }
         // console.log(res);
         // return res;

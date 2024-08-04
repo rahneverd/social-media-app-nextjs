@@ -72,38 +72,22 @@ function CredebtialsForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
-    // signIn('credentils', {
-    //   callbackUrl: '/dashboard',
-    //   username: values?.username,
-    //   password: values?.password
-    // });
+
     try {
-      // const response = await fetch('/api/login', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify({
-      //     username: values.username,
-      //     password: values.password
-      //   })
-      // });
       const response: any = await signIn('credentials', {
         username: values?.username,
         password: values?.password,
         redirect: false
+        // callbackUrl: '/dashboard'
       });
-      console.log(response);
       if (!response.ok) {
         throw new Error(response.error);
       }
       // Process response here
       // console.log('Registration Successful', response);
-      toast({ title: 'Registration Successful' });
+      // toast({ title: 'Registration Successful' });
     } catch (error: any) {
-      console.error('Registration Failed:', error);
-      toast({ title: 'Registration Failed', description: error.message });
+      toast({ title: 'Login Failed', description: error.message });
     }
   }
 
