@@ -1,7 +1,7 @@
 'use client';
 
-import { deletePost } from '@/lib/actions';
-import { PostWithExtras } from '@/lib/definitions';
+// import { deletePost } from '@/lib/actions';
+// import { PostWithExtras } from '@/lib/definitions';
 import { cn } from '@/lib/utils';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import SubmitButton from '@/components/SubmitButton';
@@ -10,7 +10,8 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 
 type Props = {
-  post: PostWithExtras;
+  post: any;
+  // PostWithExtras;
   userId?: string;
   className?: string;
 };
@@ -32,7 +33,8 @@ function PostOptions({ post, userId, className }: Props) {
         {isPostMine && (
           <form
             action={async (formData) => {
-              const { message } = await deletePost(formData);
+              const { message } = { message: 'dummy message' };
+              // await deletePost(formData);
               toast(message);
             }}
             className="postOption"

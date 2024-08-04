@@ -1,6 +1,6 @@
 'use client';
 
-import { createComment } from '@/lib/actions';
+// import { createComment } from '@/lib/actions';
 import { CommentWithExtras } from '@/lib/definitions';
 import { CreateComment } from '@/lib/schemas';
 import {
@@ -11,7 +11,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Comment } from '@prisma/client';
+// import { Comment } from '@prisma/client';
 import { User } from 'next-auth';
 import Link from 'next/link';
 import { useOptimistic, useTransition } from 'react';
@@ -71,7 +71,7 @@ function Comments({
             <Link href={`/dashboard/${username}`} className="font-semibold">
               {username}
             </Link>
-            <p>{comment.body}</p>
+            <p>{comment?.body}</p>
           </div>
         );
       })}
@@ -84,7 +84,7 @@ function Comments({
               addOptimisticComment(valuesCopy.body);
             });
 
-            await createComment(valuesCopy);
+            // await createComment(valuesCopy);
           })}
           className="border-b border-gray-300 dark:border-neutral-800 pb-3 py-1 flex items-center space-x-2"
         >

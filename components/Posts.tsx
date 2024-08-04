@@ -1,8 +1,9 @@
-import { fetchPosts } from '@/lib/data';
+// import { fetchPosts } from '@/lib/data';
 import Post from './Post';
 
 async function Posts() {
-  const posts = await fetchPosts();
+  const posts: any[] = [];
+  // await fetchPosts();
 
   return (
     <>

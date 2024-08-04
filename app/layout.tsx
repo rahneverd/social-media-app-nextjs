@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
+import AuthProvider from '@/components/AuthProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +26,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthProvider>
+            {/* <NextSSRPlugin
+
+              routerConfig={extractRouterConfig(ourFileRouter)}
+            /> */}
+            {children}
+            {/* <Toaster richColors /> */}
+          </AuthProvider>
         </ThemeProvider>
         <Toaster />
       </body>
