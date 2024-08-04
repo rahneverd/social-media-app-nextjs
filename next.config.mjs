@@ -15,6 +15,12 @@ const nextConfig = {
         hostname: 'cdn-icons-png.freepik.com',
         port: '',
         pathname: '/**/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'gravatar.com',
+        port: '',
+        pathname: '/**/**'
       }
     ]
   }
