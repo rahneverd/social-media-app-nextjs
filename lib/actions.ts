@@ -16,7 +16,6 @@ export function register(username: string, email: string, password: string) {
     // return response;
     if (!response.ok) {
       const error: any = await response.json();
-      console.log(error);
       // throw new Error(error);
       reject(new Error(error));
     } else {

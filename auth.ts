@@ -64,7 +64,6 @@ export const config = {
   callbacks: {
     async session({ session, token }) {
       if (token) {
-        console.log('token in callBack: ', token);
         session.user.username = token.username;
         session.user.token = token.token;
         session.user.email = token.email;
@@ -74,8 +73,6 @@ export const config = {
       return session;
     },
     async jwt({ token, user }) {
-      console.log('token from jwt: ', token);
-      console.log('user from jwt: ', user);
       if (user) {
         token.id = user?.id;
         token.name = user?.name;
@@ -84,7 +81,6 @@ export const config = {
         token.picture = user?.picture;
         token.token = user.token;
       }
-      console.log('token from jwt at end: ', token);
       return token;
     }
   },

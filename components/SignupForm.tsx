@@ -60,26 +60,11 @@ function CredebtialsForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // const response: any = await signIn('credentials', {
-      //   email: values.email,
-      //   username: values?.username,
-      //   password: values?.password,
-      //   redirect: false
-      // });
-      // if (!response.ok) {
-      //   throw new Error(response.error);
-      // }
-      // router.push('/dashboard');
       const signupResponse: any = await register(
         values?.username,
         values?.email,
         values?.password
       );
-      // if (!signupResponse.ok) {
-      //   const error: any = await signupResponse.json();
-      //   console.log(error);
-      //   throw new Error(error);
-      // } else {
       const response: any = await signIn('credentials', {
         username: values?.username,
         password: values?.password,
@@ -89,9 +74,7 @@ function CredebtialsForm() {
         throw new Error(response.error);
       }
       router.push('/dashboard');
-      // }
     } catch (error: any) {
-      console.log(error);
       toast({
         title: 'Registration Failed',
         description: error.message ? error.message : error?.error
