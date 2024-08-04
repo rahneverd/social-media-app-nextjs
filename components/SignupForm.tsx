@@ -49,6 +49,7 @@ function CredebtialsForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      email: '',
       username: '',
       password: ''
     }
@@ -57,17 +58,19 @@ function CredebtialsForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response: any = await signIn('credentials', {
-        username: values?.username,
-        password: values?.password,
-        redirect: false
-      });
-      if (!response.ok) {
-        throw new Error(response.error);
-      }
-      router.push('/dashboard');
+      // const response: any = await signIn('credentials', {
+      //   email: values.email,
+      //   username: values?.username,
+      //   password: values?.password,
+      //   redirect: false
+      // });
+      // if (!response.ok) {
+      //   throw new Error(response.error);
+      // }
+      // router.push('/dashboard');
+      console.log(values);
     } catch (error: any) {
-      toast({ title: 'Login Failed', description: error.message });
+      // toast({ title: 'Login Failed', description: error.message });
     }
   }
 
