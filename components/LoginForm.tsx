@@ -28,6 +28,7 @@ const formSchema = z.object({
     message: 'Username must be at least 2 characters.'
   })
 });
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
   return (
@@ -36,28 +37,11 @@ export default function LoginForm() {
         <h1 className={`${calSans.className} mb-3 text-2xl dark:text-black`}>
           Please log in to continue.
         </h1>
-
         <CredebtialsForm />
-        {/* <LoginButton /> */}
       </div>
     </div>
   );
 }
-
-// function LoginButton() {
-//   const { pending } = useFormStatus();
-
-//   return (
-//     <Button
-//       className="mt-4 w-full"
-//       variant={'secondary'}
-//       aria-disabled={pending}
-//       onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
-//     >
-//       Log in with Google
-//     </Button>
-//   );
-// }
 
 function CredebtialsForm() {
   const { pending } = useFormStatus();
@@ -68,24 +52,19 @@ function CredebtialsForm() {
       password: ''
     }
   });
+  const router = useRouter();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-
     try {
       const response: any = await signIn('credentials', {
         username: values?.username,
         password: values?.password,
         redirect: false
-        // callbackUrl: '/dashboard'
       });
       if (!response.ok) {
         throw new Error(response.error);
       }
-      // Process response here
-      // console.log('Registration Successful', response);
-      // toast({ title: 'Registration Successful' });
+      router.push('/dashboard');
     } catch (error: any) {
       toast({ title: 'Login Failed', description: error.message });
     }

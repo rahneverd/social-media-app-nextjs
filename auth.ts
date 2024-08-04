@@ -16,11 +16,8 @@ export const config = {
     signIn: '/login'
   },
   // adapter: PrismaAdapter(prisma),
+  secret: 'MySecret',
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
-    }),
     CredentialsProvider({
       name: 'credentils',
       credentials: {
@@ -47,7 +44,20 @@ export const config = {
         });
         if (res.status === 200) {
           const user = await res.json();
-          return user;
+          console.log('in auth: ', user);
+          // return user;
+          return {
+            id: user._id,
+            email: user.email,
+            username: user.username,
+            name: user.username,
+            picture: user.picture
+            //     user?._id;
+            // token.name = user?.name;
+            // token.email = user?.email;
+            // token.username = user?.username;
+            // token.picture = user?.picture;
+          };
         } else {
           const error: any = await res.json();
           throw new Error(error);
@@ -71,9 +81,12 @@ export const config = {
       // }
 
       if (token) {
-        session.user.avatar = token.avatar;
-        session.user.username = token.name;
+        // session.user.avatar = token.avatar;
+        console.log(token);
+        session.user.username = token.username;
         session.user.token = token.token;
+        session.user.email = token.email;
+        session.user.id = token.id;
       }
 
       return session;
@@ -102,12 +115,22 @@ export const config = {
       // }
 
       // return {
-      //   id: prismaUser.id,
-      //   name: prismaUser.name,
-      //   email: prismaUser.email,
-      //   username: prismaUser.username,
-      //   picture: prismaUser.image
+      //   _id: user._id,
+      //   // name: prismaUser.name,
+      //   email: user.email,
+      //   username: user.username
+      //   // picture: user?.image
       // };
+      console.log('from jwt: ', token);
+      console.log('from jwt: ', user);
+      if (user) {
+        token.id = user?.id;
+        token.name = user?.name;
+        token.email = user?.email;
+        token.username = user?.username;
+        token.picture = user?.picture;
+      }
+      console.log('from jwt: ', token);
       return token;
     }
   }
