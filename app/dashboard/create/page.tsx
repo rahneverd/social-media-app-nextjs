@@ -22,6 +22,7 @@ import {
 import { Input } from '@/components/ui/input';
 import useMount from '@/hooks/useMount';
 // import { createPost } from '@/lib/actions';
+import { upload } from '@/lib/actions';
 import { CreatePost } from '@/lib/schemas';
 // import { UploadButton } from '@/lib/uploadthing';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -44,6 +45,22 @@ function CreatePage() {
       fileUrl: undefined
     }
   });
+  async function onFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    console.log(event?.target?.files[0]);
+    try {
+      let response = await upload(event?.target?.files[0]);
+      console.log(response);
+    } catch (error: any) {
+      console.log(error?.message);
+      // toast({
+      //   title: 'Upload Failed',
+      //   description: error.message ? error.message : error?.error
+      // });
+      toast.error(<Error res={error.message ? error.message : error?.error} />);
+    }
+
+    // call upload api
+  }
   const fileUrl = form.watch('fileUrl');
 
   if (!mount) return null;
@@ -100,6 +117,11 @@ function CreatePage() {
                             toast.error('Upload failed');
                           }}
                         /> */}
+                        <input
+                          type="file"
+                          name="file"
+                          onChange={onFileUpload}
+                        />
                       </FormControl>
                       <FormDescription>
                         Upload a picture to post.

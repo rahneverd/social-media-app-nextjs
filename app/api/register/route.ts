@@ -28,6 +28,7 @@ export async function POST(
     const error: any = await response.json();
     return Response.json({ error: error[0] });
   } else {
-    return Response.json(response);
+    const resJson = await response.json();
+    return Response.json(resJson);
   }
 }
