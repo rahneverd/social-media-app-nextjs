@@ -1,4 +1,4 @@
-import { APIROUTES, Backend_URL } from './contants';
+import { APIROUTES } from './contants';
 
 export function register(username: string, email: string, password: string) {
   return new Promise(async (resolve, reject) => {

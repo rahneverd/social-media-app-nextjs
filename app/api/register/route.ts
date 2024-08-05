@@ -9,33 +9,24 @@ export async function POST(
   },
   res: NextApiResponse
 ) {
+  console.log(req);
+  const reqBody = await req.json();
+  console.log(reqBody);
   const response: any = await fetch(Backend_URL + APIROUTES.REGISTER, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      email: req?.body?.email,
-      username: req?.body?.username,
-      password: req?.body?.password
+      email: reqBody?.email,
+      username: reqBody?.username,
+      password: reqBody?.password
     })
   });
   // // return response;
   if (!response.ok) {
     const error: any = await response.json();
-    // let errorsObj = {
-    //   errors: response.errors
-    // };
-    // throw new Error(error);
-    // return Response.json({ errors: error });
-    // Response.json(error).error()
-    // res.status(400).json(error);
-    // return new NextApiResponse()
     return Response.json({ error: error[0] });
-    // return new NextResponse(error, {
-    //   status: 400
-    // });
-    // return NextResponse.status();
   } else {
     return Response.json(response);
   }
