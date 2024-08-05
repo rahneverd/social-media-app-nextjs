@@ -61,7 +61,7 @@ export function upload(file: File) {
         console.log(resJson);
         reject(new Error(resJson?.error));
       } else {
-        resolve(response);
+        resolve(resJson);
       }
     }
   });
