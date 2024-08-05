@@ -65,6 +65,7 @@ function CredebtialsForm() {
         values?.email,
         values?.password
       );
+      console.log('signup response: ', signupResponse);
       const response: any = await signIn('credentials', {
         username: values?.username,
         password: values?.password,
@@ -75,6 +76,7 @@ function CredebtialsForm() {
       }
       router.push('/dashboard');
     } catch (error: any) {
+      console.log(error?.message);
       toast({
         title: 'Registration Failed',
         description: error.message ? error.message : error?.error
