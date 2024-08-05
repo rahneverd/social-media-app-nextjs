@@ -21,7 +21,14 @@ const nextConfig = {
         hostname: 'gravatar.com',
         port: '',
         pathname: '/**/**'
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8080',
+        pathname: '/**/**'
       }
+      // localhost:8080
     ]
   }
 };

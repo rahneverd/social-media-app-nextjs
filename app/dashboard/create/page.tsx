@@ -22,7 +22,7 @@ import {
 import { Input } from '@/components/ui/input';
 import useMount from '@/hooks/useMount';
 // import { createPost } from '@/lib/actions';
-import { upload } from '@/lib/actions';
+import { upload, createPost } from '@/lib/actions';
 import { CreatePost } from '@/lib/schemas';
 // import { UploadButton } from '@/lib/uploadthing';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -49,7 +49,8 @@ function CreatePage() {
     console.log(event?.target?.files[0]);
     try {
       let response = await upload(event?.target?.files[0]);
-      console.log(response);
+      console.log('http://localhost:8080/' + response);
+      form.setValue('fileUrl', 'http://localhost:8080/' + response);
     } catch (error: any) {
       console.log(error?.message);
       // toast({
@@ -80,7 +81,7 @@ function CreatePage() {
             <form
               onSubmit={form.handleSubmit(async (values) => {
                 const res: any = {};
-                // await createPost(values);
+                await createPost(values?.fileUrl, values?.caption);
                 if (res) {
                   return toast.error(<Error res={res} />);
                 }

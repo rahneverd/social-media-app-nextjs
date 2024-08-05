@@ -9,5 +9,6 @@ export const APIROUTES = {
 
   LOGIN: 'login',
   REGISTER: 'register',
-  UPLOAD: 'upload'
+  UPLOAD: 'upload',
+  CREATE_POST: 'create-post'
 };
