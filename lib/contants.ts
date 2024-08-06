@@ -1,6 +1,6 @@
 export const Backend_URL = 'http://localhost:8080/api/';
 
-export const APIROUTES = {
+export const API_ROUTES = {
   // modules
 
   POSTS_MODULE: 'posts/',
@@ -10,5 +10,6 @@ export const APIROUTES = {
   LOGIN: 'login',
   REGISTER: 'register',
   UPLOAD: 'upload',
-  CREATE_POST: 'create-post'
+  CREATE_POST: 'create-post',
+  FIND_ALL_BY_USERNAME: 'find-all-by-username'
 };

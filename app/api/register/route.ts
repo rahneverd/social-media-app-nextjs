@@ -1,7 +1,5 @@
-import { APIROUTES, Backend_URL } from '@/lib/contants';
+import { API_ROUTES, Backend_URL } from '@/lib/contants';
 import { NextApiResponse } from 'next';
-import { NextResponse } from 'next/server';
-// import { NextResponse } from 'next/server';
 
 export async function POST(
   req: Request & {
@@ -12,7 +10,7 @@ export async function POST(
   console.log(req);
   const reqBody = await req.json();
   console.log(reqBody);
-  const response: any = await fetch(Backend_URL + APIROUTES.REGISTER, {
+  const response: any = await fetch(Backend_URL + API_ROUTES.REGISTER, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

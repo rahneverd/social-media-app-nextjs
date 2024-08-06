@@ -17,7 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
-import { APIROUTES, Backend_URL } from '@/lib/contants';
+import { API_ROUTES, Backend_URL } from '@/lib/contants';
 import { register } from '@/lib/actions';
 
 const formSchema = z.object({

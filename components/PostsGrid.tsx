@@ -16,28 +16,28 @@ function PostsGrid({ posts }: { posts: PostWithExtras[] | undefined }) {
     <div className="grid grid-cols-3 gap-0.5">
       {posts?.map((post) => (
         <Link
-          href={`/dashboard/p/${post.id}`}
-          key={post.id}
+          href={`/dashboard/p/${post?._id}`}
+          key={post?._id}
           className="relative flex items-center justify-center h-44 md:h-64 lg:h-80 group col-span-1"
         >
           <Image
-            src={post.fileUrl}
+            src={post?.image}
             fill
             alt="Post preview"
             className="object-cover -z-10 transition group-hover:filter group-hover:blur-[2px] group-hover:brightness-90"
           />
           <div className="opacity-0 group-hover:opacity-100 flex transition items-center justify-center space-x-6">
-            {post.likes.length > 0 && (
+            {post?.likes?.length > 0 && (
               <div className="flex items-center font-bold space-x-1">
                 <HeartIcon className="text-white fill-white" />
-                <p className="text-white">{post.likes.length}</p>
+                <p className="text-white">{post?.likes?.length}</p>
               </div>
             )}
 
-            {post.comments.length > 0 && (
+            {post?.comments?.length > 0 && (
               <div className="flex items-center font-bold space-x-1">
                 <MessageCircle className="text-white fill-white" />
-                <p className="text-white">{post.comments.length}</p>
+                <p className="text-white">{post?.comments?.length}</p>
               </div>
             )}
           </div>

@@ -1,4 +1,7 @@
+process.env.FRONTENDURL;
+
 import PostsGrid from '@/components/PostsGrid';
+import { fetchPostsByUsername } from '@/lib/actions';
 // import { fetchPostsByUsername } from "@/lib/data";
 
 async function ProfilePage({
@@ -6,7 +9,7 @@ async function ProfilePage({
 }: {
   params: { username: string };
 }) {
-  const posts: any[] = [];
+  const posts: any = await fetchPostsByUsername(username);
   // await fetchPostsByUsername(username);
 
   return <PostsGrid posts={posts} />;
