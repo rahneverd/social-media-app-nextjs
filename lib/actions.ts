@@ -1,4 +1,6 @@
 import { APIROUTES } from './contants';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export function register(username: string, email: string, password: string) {
   return new Promise(async (resolve, reject) => {
@@ -66,6 +68,7 @@ export function upload(file: File) {
     }
   });
 }
+
 export function createPost(image: string, caption?: string) {
   return new Promise(async (resolve, reject) => {
     // console.log(file);
@@ -99,7 +102,9 @@ export function createPost(image: string, caption?: string) {
         console.log(resJson);
         reject(new Error(resJson?.error));
       } else {
-        resolve(resJson);
+        revalidatePath('/dashboard');
+        redirect('/dashboard');
+        // resolve(resJson);
       }
     }
   });

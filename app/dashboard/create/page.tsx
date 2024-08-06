@@ -80,11 +80,20 @@ function CreatePage() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(async (values) => {
-                const res: any = {};
-                await createPost(values?.fileUrl, values?.caption);
-                if (res) {
-                  return toast.error(<Error res={res} />);
+                try {
+                  const res: any = await createPost(
+                    values?.fileUrl,
+                    values?.caption
+                  );
+                } catch (error: any) {
+                  return toast.error(
+                    <Error res={error?.error ? error?.error : error?.message} />
+                  );
                 }
+
+                // if (res) {
+                //   return toast.error(<Error res={res} />);
+                // }
               })}
               className="space-y-4"
             >
