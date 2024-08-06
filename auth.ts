@@ -10,8 +10,10 @@ import {
   NextApiResponse
 } from 'next';
 import { API_ROUTES, Backend_URL } from '@/lib/contants';
+// import { signOut } from 'next-auth';
+import { redirect } from 'next/navigation';
 
-const loggedIn: boolean = false;
+var isLoggedIn: boolean = false;
 
 export const config = {
   pages: {
@@ -45,7 +47,6 @@ export const config = {
         });
         if (res.status === 200) {
           const user = await res.json();
-          console.log(user?.token);
           return {
             id: user._id,
             email: user.email,
@@ -62,45 +63,53 @@ export const config = {
     })
   ],
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
+    maxAge: 30
   },
   callbacks: {
     async session({ session, token }) {
-      console.log('session callback');
       if (token) {
         session.user.username = token.username;
         session.user.token = token.token;
         session.user.email = token.email;
         session.user.id = token.id;
       }
-      // console.log(session);
       return session;
     },
     async jwt({ token, user }) {
-      console.log('jwt callback');
       if (user) {
-        console.log('inside with user here');
-        console.log(user?.token);
-        const newUser = await fetch(Backend_URL + 'refresh-token', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            token: user?.token
-          })
-        });
         token.id = user?.id;
         token.name = user?.name;
         token.email = user?.email;
         token.username = user?.username;
         token.picture = user?.picture;
         token.token = user.token;
+        isLoggedIn = true;
+      } else if (!user && token && isLoggedIn) {
+        const resp: any = await fetch(Backend_URL + 'refresh-token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            token: token?.token
+          })
+        });
+        if (!resp.ok) {
+          return {
+            ...token,
+            error: 'AccessTokenError'
+          };
+        } else {
+          const newUser: any = await resp.json();
+          token.id = newUser?.id;
+          token.name = newUser?.name;
+          token.email = newUser?.email;
+          token.username = newUser?.username;
+          token.picture = newUser?.picture;
+          token.token = newUser.token;
+        }
       }
-      // console.log(token);
-      // if (user) {
-
-      // }
       return token;
     }
   },
