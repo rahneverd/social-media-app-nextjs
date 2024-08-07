@@ -68,6 +68,7 @@ function CreatePage() {
 
   return (
     <div>
+      {/* onOpenChange={(open) => !open && router.back()} */}
       <Dialog
         open={isCreatePage}
         onOpenChange={(open) => !open && router.back()}
@@ -85,6 +86,7 @@ function CreatePage() {
                     values?.fileUrl,
                     values?.caption
                   );
+                  router.push('/dashboard');
                 } catch (error: any) {
                   return toast.error(
                     <Error res={error?.error ? error?.error : error?.message} />

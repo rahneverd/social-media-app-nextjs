@@ -1,4 +1,5 @@
 export const Backend_URL = 'http://localhost:8080/api/';
+export const Frontend_URL = 'http://localhost:3000';
 
 export const API_ROUTES = {
   // modules

@@ -1,7 +1,3 @@
-// import { CredentialsProvider } from './node_modules/next-auth/src/providers/credentials';
-// import { PrismaAdapter } from '@auth/prisma-adapter';
-// import prisma from '@/lib/prisma';
-// import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth, { getServerSession, type NextAuthOptions } from 'next-auth';
 import {
@@ -10,7 +6,6 @@ import {
   NextApiResponse
 } from 'next';
 import { API_ROUTES, Backend_URL } from '@/lib/contants';
-// import { signOut } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 var isLoggedIn: boolean = false;
@@ -64,7 +59,7 @@ export const config = {
   ],
   session: {
     strategy: 'jwt',
-    maxAge: 30
+    maxAge: 1800
   },
   callbacks: {
     async session({ session, token }) {
@@ -96,10 +91,10 @@ export const config = {
           })
         });
         if (!resp.ok) {
-          return {
-            ...token,
-            error: 'AccessTokenError'
-          };
+          // return {
+          //   ...token,
+          //   error: 'AccessTokenError'
+          // };
         } else {
           const newUser: any = await resp.json();
           token.id = newUser?.id;

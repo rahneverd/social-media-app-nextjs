@@ -1,6 +1,6 @@
-import { API_ROUTES } from './contants';
+import { API_ROUTES, Frontend_URL } from './contants';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 
 export function register(username: string, email: string, password: string) {
   return new Promise(async (resolve, reject) => {
@@ -70,6 +70,8 @@ export function upload(file: File) {
 }
 
 export function createPost(image: string, caption?: string) {
+  // import { useRouter } from 'next/navigation';
+  // const router = useRouter();
   return new Promise(async (resolve, reject) => {
     // console.log(file);
     // const formData = new FormData();
@@ -102,8 +104,10 @@ export function createPost(image: string, caption?: string) {
         console.log(resJson);
         reject(new Error(resJson?.error));
       } else {
-        revalidatePath('/dashboard');
-        redirect('/dashboard');
+        resolve(true);
+        // revalidatePath('/dashboard');
+        // redirect('/dashboard');
+        // router.push('/dashboard');
         // resolve(resJson);
       }
     }
@@ -111,10 +115,11 @@ export function createPost(image: string, caption?: string) {
 }
 
 export function fetchPostsByUsername(username: string) {
-  console.log('username: ', username);
+  // console.log('username: ', username);
   return new Promise(async (resolve, reject) => {
     const response: any = await fetch(
-      '/api/' + API_ROUTES.FIND_ALL_BY_USERNAME,
+      // Frontend_URL + '/api/' + API_ROUTES.FIND_ALL_BY_USERNAME,
+      'http://localhost:3000/api/find-all-by-username',
       {
         method: 'POST',
         headers: {
@@ -125,18 +130,19 @@ export function fetchPostsByUsername(username: string) {
         })
       }
     );
-    // console.log(response);
+    console.log('from fetchFunc: ', response);
     // return response;
+    // console.log('in actions: ', response);
     if (!response.ok) {
       const error: any = await response.json();
-      console.log(response);
+      // console.log(response);
       // throw new Error(error);
       reject(new Error(error));
     } else {
       const resJson = await response.json();
-      console.log(resJson);
+      console.log('inside actions: ', resJson);
       if (resJson?.error) {
-        console.log(resJson);
+        // console.log(resJson);
         reject(new Error(resJson?.error));
       } else {
         // revalidatePath('/dashboard');
